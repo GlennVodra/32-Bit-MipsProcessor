@@ -14,4 +14,4 @@ Included are six lab reports documenting major steps taken in this project.
 
 ## And finally...
 ### just a few of the adders and AND gates needed to make a 32- bit multiplier
-![Uploading Multiply.png…]()
+![Multiply](https://github.com/GlennVodra/32-Bit-MipsProcessor/assets/37476686/012dfc0a-dc04-4b97-b7c9-9a7dfc46703b)
