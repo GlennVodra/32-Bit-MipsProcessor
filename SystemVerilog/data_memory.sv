@@ -10,7 +10,7 @@
  Description : Mips Data Memory
 ----------------------------------------------------*/
 
-module InstructionMemory(clk, W_EN, ADDR, D_IN, D_OUT);
+module data_memory(clk, W_EN, ADDR, D_IN, D_OUT);
 	input logic clk, W_EN;
 	input logic [9:0] ADDR;
 	input logic [31:0] D_IN;
