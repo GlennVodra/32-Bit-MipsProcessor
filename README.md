@@ -1,7 +1,7 @@
 # 32-Bit-MipsProcessor
 
 This design was created through the course Digital System Design II\
-Included are six lab reports documenting major steps taken in this project.\
+Included are six lab reports documenting major steps taken in this project.
 
 Also includes System Verilog Translations of a lot of the design.\
 I also plan on adding the following over the next few months:
