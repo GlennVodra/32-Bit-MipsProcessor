@@ -15,7 +15,7 @@ module InstructionMemory(addr, d_out);
 	output logic [31:0] d_out;
 	
 	//Fibonacci to 10
-	logic [7:0] mem [371:0] = '{
+	logic [7:0] mem [0:371] = '{
 		8'h20, 8'h08, 8'h00, 8'h00,
 		8'h20, 8'h09, 8'h00, 8'h01,
 		8'h20, 8'h0a, 8'h03, 8'hed,
@@ -113,9 +113,12 @@ module InstructionMemory(addr, d_out);
 	
 	//Acess next four bytes
 	always_comb begin
-		unique if (addr < 377) begin
-			d_out[27:0] <= {mem[addr], mem[addr+1], mem[addr+2], mem[addr+3]};
+		if (addr < 377) begin
+			d_out <= {mem[$unsigned(addr)], mem[$unsigned(addr+1)], mem[$unsigned(addr+2)], mem[$unsigned(addr+3)]};
 		end
+		else begin
+			d_out <= {32{1'b0}};
+		end 
 	end
 	
 endmodule
