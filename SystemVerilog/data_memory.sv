@@ -16,7 +16,7 @@ module data_memory(clk, W_EN, ADDR, D_IN, D_OUT);
 	input logic [31:0] D_IN;
 	output logic [31:0] D_OUT;
 	
-	logic [31:0] MIPS_DATA_MEM [2**10:0];
+	logic [31:0] MIPS_DATA_MEM [2**10:0] = '{$size(MIPS_DATA_MEM){0}};
 	
 	always_ff @(posedge clk) begin
 		if (W_EN == 1) begin
