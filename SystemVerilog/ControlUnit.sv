@@ -16,52 +16,52 @@ module ControlUnit (Opcode, Funct, RegWrite, MemToReg, MemWrite, ALUSrc, RegDst,
 	
 	always_comb begin
 		unique case (Opcode)
-			6'b000000: RegWrite = 1;
-			6'b001000: RegWrite = 1;
-			6'b001100: RegWrite = 1;
-			6'b001101: RegWrite = 1;
-			6'b001110: RegWrite = 1;
-			6'b101011: RegWrite = 0;
-			6'b100011: RegWrite = 1;
-			default:   RegWrite = 0;
+			6'b000000: RegWrite = 1'b1;
+			6'b001000: RegWrite = 1'b1;
+			6'b001100: RegWrite = 1'b1;
+			6'b001101: RegWrite = 1'b1;
+			6'b001110: RegWrite = 1'b1;
+			6'b101011: RegWrite = 1'b0;
+			6'b100011: RegWrite = 1'b1;
+			default:   RegWrite = 1'b0;
 		endcase
 	end
 
 	always_comb begin 
 		unique case (Opcode)
-			6'b100011: MemToReg = 1;
-			default:   MemToReg = 0;
+			6'b100011: MemToReg = 1'b1;
+			default:   MemToReg = 1'b0;
 		endcase
 	end
 	
 	always_comb begin
 		unique case (Opcode)
-			6'b101011: MemWrite = 1;
-			default:   MemWrite = 0;
+			6'b101011: MemWrite = 1'b1;
+			default:   MemWrite = 1'b0;
 		endcase
 	end
 	
 	always_comb begin
 		unique case (Opcode)
-			6'b001000: ALUSrc = 1;
-			6'b001100: ALUSrc = 1;
-			6'b001101: ALUSrc = 1;
-			6'b001110: ALUSrc = 1;
-			6'b101011: ALUSrc = 1;
-			6'b100011: ALUSrc = 1;
-			default:   ALUSrc = 0;
+			6'b001000: ALUSrc = 1'b1;
+			6'b001100: ALUSrc = 1'b1;
+			6'b001101: ALUSrc = 1'b1;
+			6'b001110: ALUSrc = 1'b1;
+			6'b101011: ALUSrc = 1'b1;
+			6'b100011: ALUSrc = 1'b1;
+			default:   ALUSrc = 1'b0;
 		endcase
 	end
 	
 	always_comb begin
 		unique case (Opcode)
-			6'b000000: RegDst = 1;
-			6'b100011: RegDst = 0;
-			6'b001000: RegDst = 0;
-			6'b001100: RegDst = 0;
-			6'b001101: RegDst = 0;
-			6'b001110: RegDst = 0;
-			default:   RegDst = 0;
+			6'b000000: RegDst = 1'b1;
+			6'b100011: RegDst = 1'b0;
+			6'b001000: RegDst = 1'b0;
+			6'b001100: RegDst = 1'b0;
+			6'b001101: RegDst = 1'b0;
+			6'b001110: RegDst = 1'b0;
+			default:   RegDst = 1'b0;
 		endcase
 	end
 	
