@@ -15,12 +15,12 @@ module RegisterFile #(parameter BIT_DEPTH = 32, parameter LOG_PORT_DEPTH = 5)(
 	input logic [LOG_PORT_DEPTH-1:0] addr1, addr2, addr3;
 	input logic [BIT_DEPTH-1:0] wd;
 	input logic we, clk;
-	output logic [LOG_PORT_DEPTH-1:0] RD1, RD2;
+	output logic [BIT_DEPTH-1:0] RD1, RD2;
 	
 	logic [BIT_DEPTH-1:0] regDat [0:2**LOG_PORT_DEPTH-1] = '{default:'0};
 	
 	always_ff @(negedge clk)begin 
-		if((we == 1) && ($unsigned(addr3) !== 0)) begin
+		if((we == 1) && ($unsigned(addr3) != 0)) begin
 			regDat[$unsigned(addr3)] <= wd;
 		end
 	end
