@@ -34,7 +34,7 @@ module AddSubN #(parameter N = 32)(A, B, OP, Sum);
 				fadder fadder_i (
 					.A(A[i]),
 					.B(Bin[i]),
-					.Cin(0),
+					.Cin(1'b0),
 					.Sum(Sum[i]),
 					.Cout(C_out_array[i])
 				);
