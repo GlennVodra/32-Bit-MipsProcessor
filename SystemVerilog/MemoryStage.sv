@@ -9,9 +9,9 @@
 
  Description : Processor Memory Stage
 ----------------------------------------------------*/
-module MemoryStage(clk, rst, RegWrite, MemtoReg, MemWrite, WriteReg, ALUResult, WriteData,
+module MemoryStage(clk, RegWrite, MemtoReg, MemWrite, WriteReg, ALUResult, WriteData,
 				   RegWriteOut, MemtoRegOut, WriteRegOut, ALUResultOut, MemOut);
-	input logic	clk, rst;
+	input logic	clk;
 	input logic RegWrite, MemtoReg, MemWrite;
 	input logic [4:0] WriteReg;
 	input logic [31:0] ALUResult, WriteData;
