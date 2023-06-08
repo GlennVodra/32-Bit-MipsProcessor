@@ -16,6 +16,9 @@
       | 1100 |   |Logical SHIFT LEFT     |
       | 1101 |   |Logical LOG SHIFT RIGTH|
       | 1110 |   |Logical ARI SHIFT RIGHT|
+      | 0100 |   | 32-BIT ADD            |
+      | 0110 |   | 16-BIT Multiplication |
+      | 0101 |   | 32-BIT SUB            |
 ----------------------------------------------------*/
 import global_pkg::N;
 import global_pkg::M;
@@ -49,19 +52,19 @@ module alu32 (A, B, OP, Y);
 	
 	sllN #(.N(N), .M(M)) sllN_32(
 		.A(A),
-		.SHIFT_AMT(B),
+		.SHIFT_AMT(B[M-1:0]),
 		.Y(SLL_result)
 	);
 	
 	srlN #(.N(N), .M(M)) srlN_32(
 		.A(A),
-		.SHIFT_AMT(B),
+		.SHIFT_AMT(B[M-1:0]),
 		.Y(SRL_result)
 	);
 	
 	sraN #(.N(N), .M(M)) sraN_32(
 		.A(A),
-		.SHIFT_AMT(B),
+		.SHIFT_AMT(B[M-1:0]),
 		.Y(SRA_result)
 	);
 	
@@ -73,8 +76,8 @@ module alu32 (A, B, OP, Y);
 	); 
 	
 	multiN #(.N(N)) MultiN_32 (
-		.A(A),
-		.B(B),
+		.A(A[(N/2)-1:0]),
+		.B(B[(N/2)-1:0]),
 		.Product(MULTI_result)
 	);
 	
