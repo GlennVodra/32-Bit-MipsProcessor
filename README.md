@@ -5,6 +5,7 @@ Included are six lab reports documenting major steps taken in this project.
 
 Also includes System Verilog Translations of a lot of the design.\
 I also plan on adding the following over the next few months:
+* Proper Shift Support ✅
 * Conditional and Unconditional Branching
 * Data Fowarding/Hazard Detection
 * Data Cache
