@@ -9,9 +9,10 @@
 
  Description :Control Unit 
 ----------------------------------------------------*/
-module ControlUnit (Opcode, Funct, RegWrite, MemToReg, MemWrite, ALUSrc, RegDst, ALUControl);
+module ControlUnit (Opcode, Funct, RegWrite, MemToReg, MemWrite, ALUSrcA, ALUSrcB, RegDst, ALUControl);
 	input logic [5:0] Opcode, Funct;
-	output logic RegWrite, MemToReg, MemWrite, ALUSrc, RegDst;
+	output logic RegWrite, MemToReg, MemWrite, RegDst, ALUSrcA;
+	output logic [1:0] ALUSrcB;
 	output logic [3:0] ALUControl;
 	
 	always_comb begin
@@ -43,13 +44,31 @@ module ControlUnit (Opcode, Funct, RegWrite, MemToReg, MemWrite, ALUSrc, RegDst,
 	
 	always_comb begin
 		unique case (Opcode)
-			6'b001000: ALUSrc = 1'b1;
-			6'b001100: ALUSrc = 1'b1;
-			6'b001101: ALUSrc = 1'b1;
-			6'b001110: ALUSrc = 1'b1;
-			6'b101011: ALUSrc = 1'b1;
-			6'b100011: ALUSrc = 1'b1;
-			default:   ALUSrc = 1'b0;
+			6'b000000: unique case (Funct)
+				6'b000000: ALUSrcA = 1'b1;
+				6'b000010: ALUSrcA = 1'b1;
+				6'b000011: ALUSrcA = 1'b1;
+				default: ALUSrcA = 1'b0;
+			endcase
+			default: ALUSrcA = 1'b0;
+		endcase
+	end
+	
+	always_comb begin
+		unique case (Opcode)
+			6'b001000: ALUSrcB = 2'b01;
+			6'b001100: ALUSrcB = 2'b01;
+			6'b001101: ALUSrcB = 2'b01;
+			6'b001110: ALUSrcB = 2'b01;
+			6'b101011: ALUSrcB = 2'b01;
+			6'b100011: ALUSrcB = 2'b01;
+			6'b000000: unique case (Funct)
+				6'b000000: ALUSrcB = 2'b10;
+				6'b000010: ALUSrcB = 2'b10;
+				6'b000011: ALUSrcB = 2'b10;
+				default:   ALUSrcB = 2'b00;
+			endcase
+			default:   ALUSrcB = 2'b00;
 		endcase
 	end
 	
