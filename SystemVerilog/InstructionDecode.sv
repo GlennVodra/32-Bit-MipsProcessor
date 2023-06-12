@@ -13,15 +13,16 @@ import global_pkg::BIT_DEPTH;
 import global_pkg::LOG_PORT_DEPTH;
 
 module InstructionDecode(Instruction, clk, RegWriteAddr, RegWriteData, RegWriteEn, 
-						 RegWrite, MemToReg, MemWrite, ALUControl, ALUSrc, RegDst,
-						 RD1, RD2, RtDest, RdDest, ImmOut);
+						 RegWrite, MemToReg, MemWrite, ALUControl, ALUSrcA, ALUSrcB, RegDst,
+						 RD1, RD2, RtDest, RdDest, ImmOut, Shamt);
 	input logic [31:0] Instruction, RegWriteData;
 	input logic [4:0] RegWriteAddr;
 	input logic clk, RegWriteEn;
 	
-	output logic RegWrite, MemToReg, MemWrite, ALUSrc, RegDst;
+	output logic RegWrite, MemToReg, MemWrite, RegDst, ALUSrcA;
+	output logic [1:0] ALUSrcB;
 	output logic [3:0] ALUControl;
-	output logic [4:0] RtDest, RdDest;
+	output logic [4:0] RtDest, RdDest, Shamt;
 	output logic [31:0] RD1, RD2, ImmOut;
 	
 	RegisterFile #(.BIT_DEPTH(BIT_DEPTH), .LOG_PORT_DEPTH(LOG_PORT_DEPTH)) MIPS_REG_FILE(
@@ -41,13 +42,16 @@ module InstructionDecode(Instruction, clk, RegWriteAddr, RegWriteData, RegWriteE
 		.RegWrite(RegWrite),
 		.MemToReg(MemToReg),
 		.MemWrite(MemWrite),
-		.ALUSrc(ALUSrc),
+		.ALUSrcA(ALUSrcA),
+		.ALUSrcB(ALUSrcB),
 		.RegDst(RegDst), 
 		.ALUControl(ALUControl)
 	);
 	
 	assign RtDest = Instruction[20:16];
 	assign RdDest = Instruction[15:11];
+	
+	assign Shamt = Instruction[10:6];
 	
 	assign ImmOut = {{16{Instruction[15]}}, Instruction[15:0]};
 	
