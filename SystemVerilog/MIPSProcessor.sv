@@ -36,9 +36,10 @@ module MIPSProcessor (clk, rst, MemStageWriteData, ALUResult);
 
 
 	//Outputs
-		logic InstructionDecode_RegWrite, InstructionDecode_MemToReg, InstructionDecode_MemWrite, InstructionDecode_ALUSrc, InstructionDecode_RegDst;
-	    logic [3:0] InstructionDecode_ALUControl;
-	    logic [4:0] InstructionDecode_RtDest, InstructionDecode_RdDest;
+		logic InstructionDecode_RegWrite, InstructionDecode_MemToReg, InstructionDecode_MemWrite, InstructionDecode_ALUSrcA, InstructionDecode_RegDst;
+	    logic [1:0] InstructionDecode_ALUSrcB;
+		logic [3:0] InstructionDecode_ALUControl;
+	    logic [4:0] InstructionDecode_RtDest, InstructionDecode_RdDest, InstructionDecode_Shamt;
 	    logic [31:0] InstructionDecode_RD1, InstructionDecode_RD2, InstructionDecode_ImmOut;
 	
 	InstructionDecode MIPS_Instruction_Decode(
@@ -50,33 +51,38 @@ module MIPSProcessor (clk, rst, MemStageWriteData, ALUResult);
 		.RegWrite(InstructionDecode_RegWrite),
 		.MemToReg(InstructionDecode_MemToReg),
 		.MemWrite(InstructionDecode_MemWrite),
-		.ALUSrc(InstructionDecode_ALUSrc),
+		.ALUSrcA(InstructionDecode_ALUSrcA),
+		.ALUSrcB(InstructionDecode_ALUSrcB),
 		.RegDst(InstructionDecode_RegDst),
 		.ALUControl(InstructionDecode_ALUControl),
 		.RtDest(InstructionDecode_RtDest),
 		.RdDest(InstructionDecode_RdDest),
 		.RD1(InstructionDecode_RD1),
 		.RD2(InstructionDecode_RD2),
-		.ImmOut(InstructionDecode_ImmOut)
+		.ImmOut(InstructionDecode_ImmOut),
+		.Shamt(InstructionDecode_Shamt)
 	);
 	
 //Execute Stage
 	//Inputs
-		logic ExecuteStage_RegWrite, ExecuteStage_MemToReg, ExecuteStage_MemWrite, ExecuteStage_ALUSrc, ExecuteStage_RegDst;
+		logic ExecuteStage_RegWrite, ExecuteStage_MemToReg, ExecuteStage_MemWrite, ExecuteStage_ALUSrcA, ExecuteStage_RegDst;
+		logic [1:0] ExecuteStage_ALUSrcB;
 	    logic [3:0] ExecuteStage_ALUControl;
 	    logic [31:0] ExecuteStage_RegSrcA, ExecuteStage_RegSrcB, ExecuteStage_ImmIn;
-	    logic [4:0] ExecuteStage_RtDest, ExecuteStage_RdDest;
+	    logic [4:0] ExecuteStage_RtDest, ExecuteStage_RdDest, ExecuteStage_Shamt;
 
 	always_ff @(posedge clk) begin
 		ExecuteStage_RegWrite <= InstructionDecode_RegWrite;
 		ExecuteStage_MemToReg <= InstructionDecode_MemToReg;
 		ExecuteStage_MemWrite <= InstructionDecode_MemWrite;
-		ExecuteStage_ALUSrc   <= InstructionDecode_ALUSrc;
+		ExecuteStage_ALUSrcA   <= InstructionDecode_ALUSrcA;
+		ExecuteStage_ALUSrcB   <= InstructionDecode_ALUSrcB;
 		ExecuteStage_RegDst   <= InstructionDecode_RegDst;
 		ExecuteStage_ALUControl <= InstructionDecode_ALUControl;
 		ExecuteStage_RegSrcA <= InstructionDecode_RD1;
 		ExecuteStage_RegSrcB <= InstructionDecode_RD2;
 		ExecuteStage_ImmIn   <= InstructionDecode_ImmOut;
+		ExecuteStage_Shamt   <= InstructionDecode_Shamt;
 		ExecuteStage_RtDest  <= InstructionDecode_RtDest;
 		ExecuteStage_RdDest  <= InstructionDecode_RdDest;
 	end
@@ -90,12 +96,14 @@ module MIPSProcessor (clk, rst, MemStageWriteData, ALUResult);
 		.RegWrite(ExecuteStage_RegWrite),
 		.MemToReg(ExecuteStage_MemToReg),
 		.MemWrite(ExecuteStage_MemWrite),
-		.ALUSrc(ExecuteStage_ALUSrc),
+		.ALUSrcA(ExecuteStage_ALUSrcA),
+		.ALUSrcB(ExecuteStage_ALUSrcB),
 		.RegDst(ExecuteStage_RegDst),
 		.ALUControl(ExecuteStage_ALUControl),
 		.RegSrcA(ExecuteStage_RegSrcA),
 		.RegSrcB(ExecuteStage_RegSrcB),
 		.ImmIn(ExecuteStage_ImmIn),
+		.Shamt(ExecuteStage_Shamt),
 		.RtDest(ExecuteStage_RtDest),
 		.RdDest(ExecuteStage_RdDest),
 		.RegWriteOut(ExecuteStage_RegWriteOut),
